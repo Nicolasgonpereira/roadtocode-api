@@ -43,9 +43,9 @@ export class PostService {
     addNewPost = async (request:Request, response:Response) => {
         const newPostData = request.body;
         const techsArray:string = `{${newPostData.techs.map((tech:string) => `"${tech}"`).join(',')}}`;
-        const newData = await this.postRepository.addPost(newPostData,techsArray);
-
-        return response.status(200).json(newData);
+        const newPost = await this.postRepository.addPost(newPostData,techsArray);
+        
+        return response.status(200).json(newPost);
     }
 
     updatePost = async (request:Request, response:Response) => {
@@ -65,5 +65,14 @@ export class PostService {
             return response.status(500).json({message:"An error occurred", error})
         }
     }
-}
 
+    deletePost = async (request: Request, response: Response) => {
+        const {slug} = request.params;
+        try {
+            await this.postRepository.deletePost(slug);
+            return response.status(200).json({message:`${slug} deletado com sucesso`});
+        } catch (error) {
+            return response.status(500).json({message: "An error occurred", error});
+        }
+    }
+}
