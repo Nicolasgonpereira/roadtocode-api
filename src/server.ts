@@ -27,7 +27,7 @@ server.use((req, res, next) => {
     next();
 })
 
-server.use(limiter);
+// server.use(limiter);
 
 server.use(express.json());
 
