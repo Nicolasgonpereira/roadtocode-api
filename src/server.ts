@@ -3,7 +3,7 @@ import express, { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import { router } from "./routes";
 
-const port = 3000;
+const port = 5000;
 const server = express();
 
 const limiter = rateLimit({
@@ -22,12 +22,12 @@ const limiter = rateLimit({
 
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', `${process.env.CORSOrigin}`);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 })
 
-// server.use(limiter);
+server.use(limiter);
 
 server.use(express.json());
 
